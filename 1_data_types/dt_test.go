@@ -40,22 +40,17 @@ func ToLittleEndian[T Bound](number T) T {
 		size = int(T(unsafe.Sizeof(number)))
 		// указаетль на первый байт number
 		ptr = unsafe.Pointer(&number)
-		// слайс байт в обратном порядке
-		reversed = make([]byte, size)
+		// итог
+		res T
 	)
 
 	for i := 0; i < size; i++ {
 		// отщипываем байт от куска памяти, который занимает `number`
 		byteVal := *(*byte)(unsafe.Add(ptr, i))
-		reversed[i] = byteVal
-	}
-
-	var res T
-	for i := 0; i < size; i++ {
 		// сдвигаем все биты байта от меньшего к большему
 		res <<= 8
-		res += T(reversed[i])
-		// PrintAsBinary(result)
+		res += T(byteVal)
+		PrintAsBinary(res)
 		// на примере: 0x0000FFFF
 		// 11111111 00000000 00000000 00000000
 		// 11111111 11111111 00000000 00000000
