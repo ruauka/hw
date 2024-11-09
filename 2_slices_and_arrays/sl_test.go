@@ -7,6 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// Кольцевая очередь (Circular Queue) — это структура данных, которая представляет собой очередь (FIFO) фиксированного размера.
+// Кольцевая очередь использует буфер фиксированного размера таким образом,
+// как будто бы после последнего элемента сразу же снова идет первый (как представлено на картинке справа).
+
 // go test -v homework_test.go
 
 type CircularQueue struct {
@@ -15,12 +19,14 @@ type CircularQueue struct {
 	head, tail int // индексы головы и хвоста очереди
 }
 
+// создать очередь с определенным размером буффера
 func NewCircularQueue(capacity int) CircularQueue {
 	return CircularQueue{
 		values: make([]int, capacity),
 	}
 }
 
+// добавить значение в конец очереди (false, если очередь заполнена)
 func (q *CircularQueue) Push(value int) bool {
 	if q.Full() {
 		return false
@@ -32,6 +38,7 @@ func (q *CircularQueue) Push(value int) bool {
 	return true
 }
 
+// удалить значение из начала очереди (false, если очередь пустая)
 func (q *CircularQueue) Pop() bool {
 	if q.Empty() {
 		return false
@@ -41,6 +48,7 @@ func (q *CircularQueue) Pop() bool {
 	return true
 }
 
+// получить значение из начала очереди (-1, если очередь пустая)
 func (q *CircularQueue) Front() int {
 	if q.Empty() {
 		return -1
@@ -48,6 +56,7 @@ func (q *CircularQueue) Front() int {
 	return q.values[q.head]
 }
 
+// получить значение из конца очереди (-1, если очередь пустая)
 func (q *CircularQueue) Back() int {
 	if q.Empty() {
 		return -1
@@ -58,10 +67,12 @@ func (q *CircularQueue) Back() int {
 	return q.values[q.tail-1]
 }
 
+// проверить пустая ли очередь
 func (q *CircularQueue) Empty() bool {
 	return q.size == 0
 }
 
+// проверить заполнена ли очередь
 func (q *CircularQueue) Full() bool {
 	return cap(q.values) == q.size
 }
