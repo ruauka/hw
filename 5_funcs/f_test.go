@@ -8,6 +8,9 @@ import (
 )
 
 func Map(data []int, action func(int) int) []int {
+	if len(data) == 0 {
+		return data
+	}
 	for i := 0; i < len(data); i++ {
 		data[i] = action(data[i])
 	}
@@ -15,13 +18,9 @@ func Map(data []int, action func(int) int) []int {
 }
 
 func Filter(data []int, action func(int) bool) []int {
-	if data == nil {
-		return nil
-	}
 	if len(data) == 0 {
-		return []int{}
+		return data
 	}
-
 	// len(data)/2 - наугад, вдруг половина и будет
 	res := make([]int, 0, len(data)/2)
 	for _, val := range data {
