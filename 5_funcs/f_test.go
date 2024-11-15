@@ -21,8 +21,8 @@ func Filter(data []int, action func(int) bool) []int {
 	if len(data) == 0 {
 		return data
 	}
-	// len(data)/2 - наугад, вдруг половина и будет
-	res := make([]int, 0, len(data)/2)
+
+	res := make([]int, 0)
 	for _, val := range data {
 		if action(val) {
 			res = append(res, val)
@@ -39,9 +39,6 @@ func Reduce(data []int, initial int, action func(int, int) int) int {
 
 	var res int
 	for i := 0; i < len(data); i++ {
-		if i == len(data) {
-			break
-		}
 		res = action(res, data[i])
 	}
 
